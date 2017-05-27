@@ -11,5 +11,5 @@ Also note that I plan to do this in a C++11 (maybe even 17) style, including sma
 
 **Also note** that I plan to include all tests so that others can validate my work.
 To that end, I will be including the *Catch* test suite, which is bundled up in a single header file.
-Thus, my use of `catch.h` is not meant to imply that it is my own work. Follow the link above to the real author.
+Thus, my use of `catch.hpp` is not meant to imply that it is my own work. Follow the link above to the real author.
 Many thanks for his development and release of such a tool.
