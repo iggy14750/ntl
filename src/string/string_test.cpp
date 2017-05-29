@@ -13,11 +13,11 @@ TEST_CASE("An empty string can be instantiated.") {
     REQUIRE(s == "");
     REQUIRE(s != my_string);
 
-    /*SECTION("Strings can have data appended to them") {
+    SECTION("Strings can have data appended to them") {
         s.append("nothing");
         REQUIRE(s.length() == 7);
         REQUIRE(s == "nothing");
-    }*/
+    }
 }
 
 TEST_CASE("A string can be instantiated from a string literal") {
@@ -25,4 +25,11 @@ TEST_CASE("A string can be instantiated from a string literal") {
     REQUIRE(s.length() == 9);
     REQUIRE(s == my_string);
     REQUIRE(s != not_my_string);
+
+    SECTION("Data can be appended to non-empty strings.") {
+
+        s.append(not_my_string);
+        REQUIRE(s.length() == 18);
+        REQUIRE(s == "My stringMy strinf");
+    }
 }

@@ -1,13 +1,16 @@
 
-#include "string.h"
 /* Implementation of a string class, the interface of which is
  * defined in `string.h`. */
-//#define NULL 0
+
+#include "string.h"
 #include <cstdio>
+#include <cstring>
+
 
 string::string() {
     _base = NULL;
     _length = 0;
+    _capacity = 0;
 }
 
 string::~string() {
@@ -18,24 +21,39 @@ string::~string() {
 
 string::string(const char * def) {
     // count length of def
-    for (_length = 0; def[_length]; _length++);
+    _length = std::strlen(def);
     if (_length == 0) {
         // no heap allocation for empty strings
         _base = NULL;
+        _capacity = 0;
         return;
     }
     // allocate heap buffer.
-    _base = new char[_length + 1];
+    _base = new char[_capacity = _length + 1];
     // copy elements into it
-    for (int i = 0; def[i]; i++) {
-        _base[i] = def[i];
-    }
+    std::strcpy(_base, def);
     _base[_length] = '\0';
 }
 
 
 void string::append(string s) {
-    // impl
+    
+    if (_base == NULL) {
+        // should probably just farm out to a copy constructor
+        _length = s.length();
+        _capacity = _length + 1;
+        _base = new char[_capacity];
+        std::strcpy(_base, s.c_str());
+        return;
+    }
+    // Now we can assume this is a non-empty string.
+    _capacity += s.length();
+    char* temp = new char[_capacity];
+    std::strcpy(temp, _base);
+    delete _base;
+    std::strcpy(temp + _length, s.c_str());
+    _length = _capacity - 1;
+    _base = temp;
 }
 
 int string::length() const {
