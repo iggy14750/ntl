@@ -14,13 +14,14 @@ class string {
 public:
     string();
     ~string();
+    string(const string&);
     string(const char* def);
     int length() const;
-    char* c_str() const;
-    void append(string);
+    const char* c_str() const;
+    void append(const string&);
 };
 
-bool operator == (string a, string b);
-bool operator != (string a, string b);
+bool operator == (const string& a, const string& b);
+bool operator != (const string& a, const string& b);
 
 #endif

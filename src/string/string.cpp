@@ -8,6 +8,7 @@
 
 
 string::string() {
+    puts("constructor: empty");
     _base = NULL;
     _length = 0;
     _capacity = 0;
@@ -19,7 +20,21 @@ string::~string() {
     }
 }
 
+string::string(const string& s) {
+    puts("constructor: copy");
+    if (s.length() == 0) {
+        string();
+        return;
+    }
+    _length = s.length();
+    _capacity = _length + 1;
+    _base = new char[_capacity];
+    std::strcpy(_base, s.c_str());
+    printf("exiting copy constructor: %s\n", s.c_str());
+}
+
 string::string(const char * def) {
+    puts("constructor: c-string");
     // count length of def
     _length = std::strlen(def);
     if (_length == 0) {
@@ -36,7 +51,7 @@ string::string(const char * def) {
 }
 
 
-void string::append(string s) {
+void string::append(const string& s) {
     
     if (_base == NULL) {
         // should probably just farm out to a copy constructor
@@ -60,11 +75,11 @@ int string::length() const {
     return _length;
 }
 
-char* string::c_str() const {
+const char* string::c_str() const {
     return _base;
 }
 
-bool operator == (string a, string b) {
+bool operator == (const string& a, const string& b) {
     // Quick bail out.
     if (a.length() != b.length()) return false;
     const char* x = a.c_str();
@@ -77,6 +92,6 @@ bool operator == (string a, string b) {
     return true;
 }
 
-bool operator != (string a, string b) {
+bool operator != (const string& a, const string& b) {
     return !(a == b);
 }
