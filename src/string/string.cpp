@@ -23,13 +23,17 @@ string::~string() {
 string::string(const string& s) {
     puts("constructor: copy");
     if (s.length() == 0) {
-        string();
+        puts("constructor: empty in copy");
+        _base = NULL;
+        _length = 0;
+        _capacity = 0;
         return;
     }
     _length = s.length();
     _capacity = _length + 1;
     _base = new char[_capacity];
     std::strcpy(_base, s.c_str());
+    _base[_length] = '\0';
     printf("exiting copy constructor: %s\n", s.c_str());
 }
 
