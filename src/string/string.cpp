@@ -16,7 +16,7 @@ string::string() {
 
 string::~string() {
     if (_base != NULL) {
-        delete _base;
+        delete[] _base;
     }
 }
 
@@ -69,7 +69,7 @@ void string::append(const string& s) {
     _capacity += s.length();
     char* temp = new char[_capacity];
     std::strcpy(temp, _base);
-    delete _base;
+    delete[] _base;
     std::strcpy(temp + _length, s.c_str());
     _length = _capacity - 1;
     _base = temp;
