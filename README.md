@@ -17,7 +17,8 @@ Thus, I have included it in my own include path, and in order to operate the tes
 Please follow the link above to aquire it for yourself.
 Many thanks to `philsquared` and his development and release of such a tool.
 
-###That Python Script
+That Python Script
+------------------
 
 What I have included is a tool to automate the process of creating new submodules in the project.
 Its operation is described in the file itself in its comments.
