@@ -8,7 +8,6 @@
 
 
 string::string() {
-    puts("constructor: empty");
     _base = NULL;
     _length = 0;
     _capacity = 0;
@@ -21,9 +20,7 @@ string::~string() {
 }
 
 string::string(const string& s) {
-    puts("constructor: copy");
     if (s.length() == 0) {
-        puts("constructor: empty in copy");
         _base = NULL;
         _length = 0;
         _capacity = 0;
@@ -34,11 +31,9 @@ string::string(const string& s) {
     _base = new char[_capacity];
     std::strcpy(_base, s.c_str());
     _base[_length] = '\0';
-    printf("exiting copy constructor: %s\n", s.c_str());
 }
 
 string::string(const char * def) {
-    puts("constructor: c-string");
     // count length of def
     _length = std::strlen(def);
     if (_length == 0) {

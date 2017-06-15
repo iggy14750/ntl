@@ -10,6 +10,9 @@ It's not unlikely that I will add other containers and algorithms not found in t
 Also note that I plan to do this in a C++11 (maybe even 17) style, including smart pointers, range-for, lambdas, etc, where appropriate.
 
 **Also note** that I plan to include all tests so that others can validate my work.
-To that end, I will be including the *Catch* test suite, which is bundled up in a single header file.
-Thus, my use of `catch.hpp` is not meant to imply that it is my own work. Follow the link above to the real author.
-Many thanks for his development and release of such a tool.
+I have decided to not include the *Catch* unit testing framework as was my initial plan.
+It is a very large header file, and I would perfer to have one copy on disk.
+This is the `catch.hpp` which is included in "test" files.
+Thus, I have included it in my own include path, and in order to operate the tests yourself I recommend the reader do the same.
+Please follow the link above to aquire it for yourself.
+Many thanks to `philsquared` and his development and release of such a tool.
