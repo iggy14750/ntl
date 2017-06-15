@@ -1,2 +1,3 @@
-bin/*
-learn/*
+*.exe
+*.o
+learn/
