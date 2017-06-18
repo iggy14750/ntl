@@ -5,7 +5,7 @@
 #include "string.h"
 #include <cstdio>
 #include <cstring>
-
+using namespace ntl;
 
 string::string() {
     _base = NULL;
@@ -59,7 +59,7 @@ void string::append(const string& s) {
         _base = new char[_capacity];
         std::strcpy(_base, s.c_str());
         return;
-    }
+    } 
     // Now we can assume this is a non-empty string.
     _capacity += s.length();
     char* temp = new char[_capacity];
@@ -78,7 +78,7 @@ const char* string::c_str() const {
     return _base;
 }
 
-bool operator == (const string& a, const string& b) {
+bool ntl::operator == (const string& a, const string& b) {
     // Quick bail out.
     if (a.length() != b.length()) return false;
     const char* x = a.c_str();
@@ -91,6 +91,6 @@ bool operator == (const string& a, const string& b) {
     return true;
 }
 
-bool operator != (const string& a, const string& b) {
+bool ntl::operator != (const string& a, const string& b) {
     return !(a == b);
 }

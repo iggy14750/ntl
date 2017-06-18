@@ -4,6 +4,7 @@
 #include <catch.hpp>
 #include "string.h"
 #include <cstdio>
+using namespace ntl;
 
 const char my_string[] = "My string";
 const char not_my_string[] = "My strinf";

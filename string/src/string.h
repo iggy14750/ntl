@@ -7,6 +7,8 @@
 #ifndef __STRING_H__ 
 #define __STRING_H__ 
 
+namespace ntl {
+
 class string {
     char* _base;
     int _length;
@@ -23,5 +25,6 @@ public:
 
 bool operator == (const string& a, const string& b);
 bool operator != (const string& a, const string& b);
+} /* namespace ntl */
 
 #endif

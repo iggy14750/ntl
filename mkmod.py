@@ -2,7 +2,7 @@
 
 # A little script which sets up a new project space when I need it.
 # This is purpose-built for this project.
-# USE: `python make.py <name> [mf]`
+# USE: `python mkmod.py <name> [mf]`
 
 # This sets up a new directory with the following structure:
 # <name>/
@@ -78,13 +78,13 @@ bin/debug.exe: bin/debug.o bin/{name}.o
 
 # compile {name}.cpp to an object file
 bin/{name}.o: src/{name}.cpp src/{name}.h
-\tg++ -c src/{name}.cpp -o bin/{name}.o
+\tg++ -c -g src/{name}.cpp -o bin/{name}.o
 
 bin/test.o: src/test.cpp src/{name}.h
 \tg++ -c src/test.cpp -o bin/test.o
 
 bin/debug.o: src/debug.cpp src/{name}.h
-\tg++ -c src/debug.cpp -o bin/debug.o
+\tg++ -c -g src/debug.cpp -o bin/debug.o
 
 clean:
 \trm bin/*
