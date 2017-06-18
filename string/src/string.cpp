@@ -8,20 +8,20 @@
 using namespace ntl;
 
 string::string() {
-    _base = NULL;
+    _base = nullptr;
     _length = 0;
     _capacity = 0;
 }
 
 string::~string() {
-    if (_base != NULL) {
+    if (_base != nullptr) {
         delete[] _base;
     }
 }
 
 string::string(const string& s) {
     if (s.length() == 0) {
-        _base = NULL;
+        _base = nullptr;
         _length = 0;
         _capacity = 0;
         return;
@@ -52,7 +52,7 @@ string::string(const char * def) {
 
 void string::append(const string& s) {
     
-    if (_base == NULL) {
+    if (_base == nullptr) {
         // should probably just farm out to a copy constructor
         _length = s.length();
         _capacity = _length + 1;

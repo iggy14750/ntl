@@ -12,7 +12,7 @@ const char not_my_string[] = "My strinf";
 TEST_CASE("An empty string can be instantiated.") {
     string s;
     REQUIRE(s.length() == 0);
-    REQUIRE(s.c_str() == (char*)NULL);
+    REQUIRE(s.c_str() == nullptr);
     REQUIRE(s == "");
     REQUIRE(s != my_string);
 
@@ -25,7 +25,7 @@ TEST_CASE("An empty string can be instantiated.") {
     SECTION("A string copy-constructed from an empty string") {
         string h(s);
         REQUIRE(h.length() == 0);
-        REQUIRE(h.c_str() == (char*)NULL);
+        REQUIRE(h.c_str() == nullptr);
         REQUIRE(s == h);
     }
 }
