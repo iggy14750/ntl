@@ -16,15 +16,15 @@ string::~string() {
 }
 
 string::string(const string& s) {
-    copy(s.c_str(), s.length());
+    copy(s.c_str(), s.length(), true);
 }
 
 string::string(const char * s) {
-    copy(s, std::strlen(s));
+    copy(s, std::strlen(s), true);
 }
 
 string& string::operator=(const string& s) {
-    copy(s.c_str(), s.length());
+    copy(s.c_str(), s.length(), false);
     return *this;
 }
 
@@ -89,8 +89,11 @@ void string::clear() {
 }
 
 // abstracts over the common copy pattern.
-void string::copy(const char* s, int len) {
-    clean_up();
+// `con` tells me if this is being called from
+// a constructor, in which I case, I must treat
+// all member data as garbage.
+void string::copy(const char* s, int len, bool con) {
+    if (!con) clean_up();
 
     if (s == nullptr) {
         clear();
@@ -100,5 +103,4 @@ void string::copy(const char* s, int len) {
     _capacity = _length + 1;
     _base = new char[_capacity];
     std::strcpy(_base, s);
-    _base[_capacity] = '\0';
 }

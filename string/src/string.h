@@ -16,7 +16,7 @@ class string {
 
     void clean_up();
     void clear();
-    void copy(const char*, int);
+    void copy(const char*, int, bool);
 public:
     string();
     ~string();
