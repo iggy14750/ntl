@@ -13,6 +13,10 @@ class string {
     char* _base;
     int _length;
     int _capacity;
+
+    void clean_up();
+    void clear();
+    void copy(const char*, int);
 public:
     string();
     ~string();
