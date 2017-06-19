@@ -28,6 +28,20 @@ TEST_CASE("An empty string can be instantiated.") {
         REQUIRE(h.c_str() == nullptr);
         REQUIRE(s == h);
     }
+
+    SECTION("An empty string can be re-assigned to an empty string") {
+        string a;
+        REQUIRE(a == s);
+        a = s;
+        REQUIRE(a == s);
+    }
+
+    SECTION("A non-empty string can be assigned to an empty string") {
+        string a = not_my_string;
+        REQUIRE(a == not_my_string);
+        a = s;
+        REQUIRE(a == s);
+    }
 }
 
 TEST_CASE("A string can be instantiated from a non-empty string") {\
@@ -35,6 +49,22 @@ TEST_CASE("A string can be instantiated from a non-empty string") {\
     REQUIRE(s.length() == 9);
     REQUIRE(s == my_string);
     REQUIRE(s != not_my_string);
+
+    SECTION("An empty string can be re-assinged with the assignment operator") {
+        string a;
+        a = s;
+        REQUIRE(a.length() == s.length());
+        REQUIRE(a == s);
+    }
+
+    SECTION("A non-empty string can be re-assigned with the assignment operator") {
+        string a = not_my_string;
+        REQUIRE(a.c_str() != not_my_string);
+        REQUIRE(a == not_my_string);
+        a = s;
+        REQUIRE(a.length() == s.length());
+        REQUIRE(a == s);
+    }
 
     SECTION("Data can be appended to non-empty strings.") {
         s.append(not_my_string);

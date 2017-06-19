@@ -16,7 +16,11 @@ class string {
 public:
     string();
     ~string();
+    // copy constructor
     string(const string&);
+    // assignment operator
+    string& operator = (const string&);
+    // conversion from c_str
     string(const char* def);
     int length() const;
     const char* c_str() const;

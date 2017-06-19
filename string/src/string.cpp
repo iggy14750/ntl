@@ -38,7 +38,7 @@ string::string(const char * def) {
     _length = std::strlen(def);
     if (_length == 0) {
         // no heap allocation for empty strings
-        _base = NULL;
+        _base = nullptr;
         _capacity = 0;
         return;
     }
@@ -49,6 +49,23 @@ string::string(const char * def) {
     _base[_length] = '\0';
 }
 
+string& string::operator=(const string& s) {
+    if (_base != nullptr) {
+        delete[] _base;
+        _base = nullptr;
+        _length = 0;
+        _capacity = 0;
+    }
+    // in case s is empty -> s.c_str() == nullptr
+    if (s.length() == 0)
+        return *this;
+    _length = s.length();
+    _capacity = _length + 1;
+    _base = new char[_capacity];
+    std::strcpy(_base, s.c_str());
+    _base[_length] = '\0';
+    return *this;
+}
 
 void string::append(const string& s) {
     
