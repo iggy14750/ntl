@@ -2,3 +2,5 @@
 *.o
 *.log
 learn/
+**/debug.cpp
+.vscode
