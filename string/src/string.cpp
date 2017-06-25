@@ -5,26 +5,45 @@
 #include "string.h"
 #include <cstdio>
 #include <cstring>
+#include "assert.h"
+#include <stdexcept>
 using namespace ntl;
 
+/* Constructs an empty string, allocating no dynamic memory. */
 string::string() {
     clear();
 }
 
+/* De-allocates dynamic memory, if this object owns any. */
 string::~string() {
     clean_up();
 }
 
+/* Deep copy from another string; (possibly) allocates new dynamic memory.
+ * No new memory is allocated if an "empty" (length 0) string is passed in.
+ */
 string::string(const string& s) {
-    copy(s.c_str(), s.length(), true);
+    clear();
+    copy(s.c_str(), s.length());
 }
 
+/* Constructs string instance from a *valid non-null c-string*. */
 string::string(const char * s) {
-    copy(s, std::strlen(s), true);
+    if (s == nullptr)
+        throw std::invalid_argument("input must be non-null");
+    unsigned int len = std::strlen(s);
+    if (len == 0)
+        clear();
+    else
+        copy(s, len);
 }
 
+/* Assigns this stirng object to be semantically equivalent to another.
+ * Possibly allocates dynamic memory, distinct from that owned by the other string.
+ */
 string& string::operator=(const string& s) {
-    copy(s.c_str(), s.length(), false);
+    if (this != &s)
+        copy(s.c_str(), s.length());
     return *this;
 }
 
@@ -48,57 +67,68 @@ void string::append(const string& s) {
     _base = temp;
 }
 
-int string::length() const {
+/* Returns the number of semantic characters in the string.
+ * Does not count NUL terminal.
+ */
+unsigned int string::length() const {
+    ASSERT(std::strlen(_base) == _length);
     return _length;
 }
 
+/* Returns a pointer to a valid c-string, with the same data as this object. */
 const char* string::c_str() const {
+    ASSERT(_base != nullptr);
     return _base;
 }
 
+/* Returns true iff the sequence of characters these 
+ * two strings represent are exactly the same.*/
 bool ntl::operator == (const string& a, const string& b) {
     // Quick bail out.
     if (a.length() != b.length()) return false;
     const char* x = a.c_str();
     const char* y = b.c_str();
-    // Empty strings have NULL c_str's
-    if (x == nullptr || y == nullptr) return true;
     for (int i = 0; x[i]; i++) {
         if (x[i] != y[i]) return false;
     }
     return true;
 }
 
+/* Returns the inverse of the equality operator. */
 bool ntl::operator != (const string& a, const string& b) {
     return !(a == b);
 }
 
 /* PRIVATE HELPER FUNCTIONS */
 
-// safely deallocates heap data
+/* Safely deallocates heap data, assuming "_base" not garbage. */
 void string::clean_up() {
-    if (_base != nullptr) {
+    if (_base != &empty_str) {
         delete[] _base;
+        clear();
     }
 }
 
-// sets data to defaults to represent empty strings
+/* Sets data to defaults to represent empty strings.
+ * Assumes "_base" is not currently pointing to data owned by this object.
+ */
 void string::clear() {
-    _base = nullptr;
+    _base = &empty_str;
     _length = _capacity = 0;
 }
 
-// abstracts over the common copy pattern.
-// `con` tells me if this is being called from
-// a constructor, in which I case, I must treat
-// all member data as garbage.
-void string::copy(const char* s, int len, bool con) {
-    if (!con) clean_up();
 
-    if (s == nullptr) {
-        clear();
-        return;
-    }
+/* Copies data from s into memory owned by this object destructively.
+ * Relies on a number of assumptions:
+ * 1. Param "s" is NON-NULL, and points to a valid, nul-terminated c-string.
+ * 2. Param "len" accurately counts the number of bytes needed to represent
+ *      the data in "s", not including a NUL-terminal char.
+ * 3. No data is currently owned by this object. New memory will (probably) be allocated.
+ */
+void string::copy(const char* s, unsigned int len) {
+    ASSERT(s != nullptr);
+    ASSERT(std::strlen(s) == len);
+
     _length = len;
     _capacity = _length + 1;
     _base = new char[_capacity];

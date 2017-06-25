@@ -12,20 +12,20 @@ const char not_my_string[] = "My strinf";
 TEST_CASE("An empty string can be instantiated.") {
     string s;
     REQUIRE(s.length() == 0);
-    REQUIRE(s.c_str() == nullptr);
+    REQUIRE(s.c_str() != nullptr);
     REQUIRE(s == "");
     REQUIRE(s != my_string);
 
-    SECTION("Strings can have data appended to them") {
+    /*SECTION("Strings can have data appended to them") {
         s.append("nothing");
         REQUIRE(s.length() == 7);
         REQUIRE(s == "nothing");
-    }
+    }*/
 
     SECTION("A string copy-constructed from an empty string") {
         string h(s);
         REQUIRE(h.length() == 0);
-        REQUIRE(h.c_str() == nullptr);
+        REQUIRE(h.c_str() != nullptr);
         REQUIRE(s == h);
     }
 
@@ -50,6 +50,11 @@ TEST_CASE("A string can be instantiated from a non-empty string") {\
     REQUIRE(s == my_string);
     REQUIRE(s != not_my_string);
 
+    SECTION("A non-empty string assigned to itself") {
+        s = s;
+        REQUIRE(s == s);
+    }
+
     SECTION("An empty string can be re-assinged with the assignment operator") {
         string a;
         a = s;
@@ -66,11 +71,13 @@ TEST_CASE("A string can be instantiated from a non-empty string") {\
         REQUIRE(a == s);
     }
 
+    /*
     SECTION("Data can be appended to non-empty strings.") {
         s.append(not_my_string);
         REQUIRE(s.length() == 18);
         REQUIRE(s == "My stringMy strinf");
     }
+    */
 
     SECTION("A string copy-constructed from non-empty string") {
         string h(s);
@@ -79,4 +86,8 @@ TEST_CASE("A string can be instantiated from a non-empty string") {\
         REQUIRE(h == my_string);
         REQUIRE(h != not_my_string);
     }
+}
+
+TEST_CASE("Instantiating a string from a nullptr throws exception") {
+    string s(nullptr);
 }
