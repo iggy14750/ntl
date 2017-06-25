@@ -16,11 +16,11 @@ TEST_CASE("An empty string can be instantiated.") {
     REQUIRE(s == "");
     REQUIRE(s != my_string);
 
-    /*SECTION("Strings can have data appended to them") {
+    SECTION("Strings can have data appended to them") {
         s.append("nothing");
         REQUIRE(s.length() == 7);
         REQUIRE(s == "nothing");
-    }*/
+    }
 
     SECTION("A string copy-constructed from an empty string") {
         string h(s);
@@ -71,13 +71,11 @@ TEST_CASE("A string can be instantiated from a non-empty string") {\
         REQUIRE(a == s);
     }
 
-    /*
     SECTION("Data can be appended to non-empty strings.") {
         s.append(not_my_string);
         REQUIRE(s.length() == 18);
         REQUIRE(s == "My stringMy strinf");
     }
-    */
 
     SECTION("A string copy-constructed from non-empty string") {
         string h(s);
@@ -89,5 +87,10 @@ TEST_CASE("A string can be instantiated from a non-empty string") {\
 }
 
 TEST_CASE("Instantiating a string from a nullptr throws exception") {
-    string s(nullptr);
+    try {
+        string s(nullptr);
+        REQUIRE(false);
+    } catch (std::exception& e) {
+        REQUIRE(true);
+    }
 }

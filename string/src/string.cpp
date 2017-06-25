@@ -47,24 +47,30 @@ string& string::operator=(const string& s) {
     return *this;
 }
 
+
+/* Appends the content of "s" to the end of this object.
+ * May allocate new heap data.
+ */
 void string::append(const string& s) {
     
-    if (_base == nullptr) {
-        // should probably just farm out to a copy constructor
-        _length = s.length();
-        _capacity = _length + 1;
-        _base = new char[_capacity];
-        std::strcpy(_base, s.c_str());
-        return;
+    // Quick bail for empty strings.
+    if (s.length() == 0) return;
+    
+    // Need to allocate new heap memory
+    if (_length + s.length() + 1 > _capacity) {
+        unsigned int new_capacity = _length + s.length() + 1;
+        unsigned int len = _length;
+        char* temp = new char[new_capacity];
+        std::strcpy(temp, _base);
+        clean_up();
+        _base = temp;
+        _capacity = new_capacity;
+        _length = len;
     }
-    // Now we can assume this is a non-empty string.
-    _capacity += s.length();
-    char* temp = new char[_capacity];
-    std::strcpy(temp, _base);
-    delete[] _base;
-    std::strcpy(temp + _length, s.c_str());
-    _length = _capacity - 1;
-    _base = temp;
+
+    // We can now assume _capacity is sufficient.
+    std::strcpy(_base + _length, s.c_str());
+    _length += s.length();
 }
 
 /* Returns the number of semantic characters in the string.
