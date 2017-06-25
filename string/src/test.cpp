@@ -9,12 +9,24 @@ using namespace ntl;
 const char my_string[] = "My string";
 const char not_my_string[] = "My strinf";
 
+#define REQUIRE_THROW(statement) {\
+try{\
+    statement;\
+    REQUIRE(false);\
+} catch (std::exception& e) {\
+    REQUIRE(true);\
+}}
+
 TEST_CASE("An empty string can be instantiated.") {
     string s;
     REQUIRE(s.length() == 0);
     REQUIRE(s.c_str() != nullptr);
     REQUIRE(s == "");
     REQUIRE(s != my_string);
+
+    SECTION("Instantiating a string from nullptr throws") {
+        REQUIRE_THROW(string s(nullptr));
+    }
 
     SECTION("Strings can have data appended to them") {
         s.append("nothing");
@@ -86,11 +98,23 @@ TEST_CASE("A string can be instantiated from a non-empty string") {\
     }
 }
 
-TEST_CASE("Instantiating a string from a nullptr throws exception") {
-    try {
-        string s(nullptr);
-        REQUIRE(false);
-    } catch (std::exception& e) {
-        REQUIRE(true);
+TEST_CASE("A string can be subscripted") {
+    string s(my_string);
+
+    SECTION("A string can be accessed by operator[]") {
+        REQUIRE(s[0] == 'M');
+        REQUIRE(s[9] == '\0');
+        REQUIRE_THROW(s[10]);
     }
+
+    SECTION("A character can be modified from a subscript") {
+        s[8] = 'f';
+        REQUIRE(s == not_my_string);
+    }
+
+    SECTION("A const string can be subscipted safely") {
+        const string x(my_string);
+        const char& c = x[0];
+    }
+
 }

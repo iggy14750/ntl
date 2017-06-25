@@ -2,21 +2,21 @@
 /* Implementation of a string class, the interface of which is
  * defined in `string.h`. */
 
-#include "string.h"
 #include <cstdio>
 #include <cstring>
-#include "assert.h"
 #include <stdexcept>
+
+#include "assert.h"
+#include "string.h"
+
 using namespace ntl;
+
+#define BUFF_SIZE 512
+static char buff[BUFF_SIZE];
 
 /* Constructs an empty string, allocating no dynamic memory. */
 string::string() {
     clear();
-}
-
-/* De-allocates dynamic memory, if this object owns any. */
-string::~string() {
-    clean_up();
 }
 
 /* Deep copy from another string; (possibly) allocates new dynamic memory.
@@ -47,6 +47,29 @@ string& string::operator=(const string& s) {
     return *this;
 }
 
+
+/* De-allocates dynamic memory, if this object owns any. */
+string::~string() {
+    clean_up();
+}
+
+/* Returns the character at the position "pos". */
+char& string::operator [] (size_t pos) {
+    if (pos > _length) {
+        snprintf(buff, BUFF_SIZE, "Invalid position: %d\n", pos);
+        throw std::out_of_range(buff);
+    }
+    return _base[pos];
+}
+
+/* A const method which returns the character at position "pos". */
+const char& string::operator [] (size_t pos) const {
+    if (pos > _length) {
+        snprintf(buff, BUFF_SIZE, "Invalid position: %d\n", pos);
+        throw std::out_of_range(buff);
+    }
+    return _base[pos];
+}
 
 /* Appends the content of "s" to the end of this object.
  * May allocate new heap data.

@@ -20,16 +20,16 @@ class string {
     void copy(const char*, unsigned int);
 public:
     string();
-    ~string();
-    // copy constructor
     string(const string&);
-    // assignment operator
-    string& operator = (const string&);
-    // conversion from c_str
     string(const char* def);
-    unsigned int length() const;
-    const char* c_str() const;
+    string& operator = (const string&);
+    ~string();
+
+    char& operator [] (size_t);
+    const char& operator [] (size_t) const;
     void append(const string&);
+    const char* c_str() const;
+    unsigned int length() const;
 };
 
 bool operator == (const string& a, const string& b);
