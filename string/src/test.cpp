@@ -119,6 +119,11 @@ TEST_CASE("A string can be subscripted") {
 
 }
 
+TEST_CASE("A string can be instantiated with default capacity") {
+    string s(8);
+    REQUIRE(s.capacity() == 8);
+}
+
 TEST_CASE("Two strings can be connected into one with operator+") {
     string a(my_string);
     string b(not_my_string);

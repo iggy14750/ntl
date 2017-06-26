@@ -38,6 +38,16 @@ string::string(const char * s) {
         copy(s, len);
 }
 
+/* Constructs a string with a default capacity.
+ * Helpful if the user knows how large the ultimate string will be.
+ * In this case, it avoids the need to keep reallocating heap memory.
+ */
+string::string(size_t cap) {
+    clear();
+    _capacity = cap;
+    _base = new char[_capacity];
+}
+
 /* Assigns this stirng object to be semantically equivalent to another.
  * Possibly allocates dynamic memory, distinct from that owned by the other string.
  */
@@ -46,7 +56,6 @@ string& string::operator=(const string& s) {
         copy(s.c_str(), s.length());
     return *this;
 }
-
 
 /* De-allocates dynamic memory, if this object owns any. */
 string::~string() {
@@ -102,6 +111,12 @@ void string::append(const string& s) {
 unsigned int string::length() const {
     ASSERT(std::strlen(_base) == _length);
     return _length;
+}
+
+/* Returns the size of the buffer backing this object. */
+size_t string::capacity() const {
+    ASSERT( (_capacity > _length) || (_capacity == 0) );
+    return _capacity;
 }
 
 /* Returns a pointer to a valid c-string, with the same data as this object. */

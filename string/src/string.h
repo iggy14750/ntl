@@ -22,6 +22,7 @@ public:
     string();
     string(const string&);
     string(const char*);
+    string(size_t);
     string& operator = (const string&);
     ~string();
 
@@ -29,6 +30,7 @@ public:
     const char& operator [] (size_t) const;
     void append(const string&);
     const char* c_str() const;
+    size_t capacity() const;
     unsigned int length() const;
 };
 
