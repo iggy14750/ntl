@@ -110,6 +110,13 @@ const char* string::c_str() const {
     return _base;
 }
 
+/* Concatenates two strings and returns the result. */
+string ntl::operator + (const string& a, const string& b) {
+    string s(a);
+    s.append(b);
+    return s;
+}
+
 /* Returns true iff the sequence of characters these 
  * two strings represent are exactly the same.*/
 bool ntl::operator == (const string& a, const string& b) {

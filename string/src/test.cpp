@@ -118,3 +118,15 @@ TEST_CASE("A string can be subscripted") {
     }
 
 }
+
+TEST_CASE("Two strings can be connected into one with operator+") {
+    string a(my_string);
+    string b(not_my_string);
+
+    SECTION("a + b returns the text of a followed by that of b") {
+        string s = a + b;
+        a.append(b);
+        REQUIRE(s == a);
+        REQUIRE(s == "My stringMy strinf");
+    }
+}

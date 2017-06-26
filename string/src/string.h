@@ -21,7 +21,7 @@ class string {
 public:
     string();
     string(const string&);
-    string(const char* def);
+    string(const char*);
     string& operator = (const string&);
     ~string();
 
@@ -32,8 +32,9 @@ public:
     unsigned int length() const;
 };
 
-bool operator == (const string& a, const string& b);
-bool operator != (const string& a, const string& b);
+string operator + (const string&, const string&);
+bool operator == (const string&, const string&);
+bool operator != (const string&, const string&);
 } /* namespace ntl */
 
 #endif
