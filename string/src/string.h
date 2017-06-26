@@ -11,13 +11,13 @@ namespace ntl {
 
 class string {
     char* _base;
-    unsigned int _length;
-    unsigned int _capacity;
+    size_t _length;
+    size_t _capacity;
     char empty_str = '\0';
 
     void clean_up();
     void clear();
-    void copy(const char*, unsigned int);
+    void copy(const char*, size_t);
 public:
     string();
     string(const string&);
@@ -31,7 +31,7 @@ public:
     void append(const string&);
     const char* c_str() const;
     size_t capacity() const;
-    unsigned int length() const;
+    size_t length() const;
 };
 
 string operator + (const string&, const string&);

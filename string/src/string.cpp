@@ -31,7 +31,7 @@ string::string(const string& s) {
 string::string(const char * s) {
     if (s == nullptr)
         throw std::invalid_argument("input must be non-null");
-    unsigned int len = std::strlen(s);
+    size_t len = std::strlen(s);
     if (len == 0)
         clear();
     else
@@ -90,8 +90,8 @@ void string::append(const string& s) {
     
     // Need to allocate new heap memory
     if (_length + s.length() + 1 > _capacity) {
-        unsigned int new_capacity = _length + s.length() + 1;
-        unsigned int len = _length;
+        size_t new_capacity = _length + s.length() + 1;
+        size_t len = _length;
         char* temp = new char[new_capacity];
         std::strcpy(temp, _base);
         clean_up();
@@ -108,7 +108,7 @@ void string::append(const string& s) {
 /* Returns the number of semantic characters in the string.
  * Does not count NUL terminal.
  */
-unsigned int string::length() const {
+size_t string::length() const {
     ASSERT(std::strlen(_base) == _length);
     return _length;
 }
@@ -176,7 +176,7 @@ void string::clear() {
  *      the data in "s", not including a NUL-terminal char.
  * 3. No data is currently owned by this object. New memory will (probably) be allocated.
  */
-void string::copy(const char* s, unsigned int len) {
+void string::copy(const char* s, size_t len) {
     ASSERT(s != nullptr);
     ASSERT(std::strlen(s) == len);
 
