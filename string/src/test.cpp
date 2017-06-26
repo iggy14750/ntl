@@ -56,7 +56,7 @@ TEST_CASE("An empty string can be instantiated.") {
     }
 }
 
-TEST_CASE("A string can be instantiated from a non-empty string") {\
+TEST_CASE("A string can be instantiated from a non-empty string") {
     string s = my_string;
     REQUIRE(s.length() == 9);
     REQUIRE(s == my_string);
@@ -120,8 +120,20 @@ TEST_CASE("A string can be subscripted") {
 }
 
 TEST_CASE("A string can be instantiated with default capacity") {
-    string s(8);
-    REQUIRE(s.capacity() == 8);
+
+    SECTION("That capacity can be non-zero") {
+        string s(8);
+        REQUIRE(s.capacity() == 8);
+        REQUIRE(s.length() == 0);
+        REQUIRE(s == "");
+    }
+
+    SECTION("The capacity can be zero") {
+        string s((size_t)0); // that I need to specify the cast is unfortunate.
+        REQUIRE(s.capacity() == 0);
+        REQUIRE(s.length() == 0);
+        REQUIRE(s == "");
+    }
 }
 
 TEST_CASE("Two strings can be connected into one with operator+") {
@@ -131,6 +143,7 @@ TEST_CASE("Two strings can be connected into one with operator+") {
     SECTION("a + b returns the text of a followed by that of b") {
         string s = a + b;
         a.append(b);
+        REQUIRE(s.capacity() >= a.capacity());
         REQUIRE(s == a);
         REQUIRE(s == "My stringMy strinf");
     }

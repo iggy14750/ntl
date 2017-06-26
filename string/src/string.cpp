@@ -44,8 +44,10 @@ string::string(const char * s) {
  */
 string::string(size_t cap) {
     clear();
+    if (cap == 0) return;
     _capacity = cap;
     _base = new char[_capacity];
+    _base[0] = '\0';
 }
 
 /* Assigns this stirng object to be semantically equivalent to another.
@@ -127,7 +129,8 @@ const char* string::c_str() const {
 
 /* Concatenates two strings and returns the result. */
 string ntl::operator + (const string& a, const string& b) {
-    string s(a);
+    string s(a.length() + b.length() + 1);
+    s.append(a);
     s.append(b);
     return s;
 }
